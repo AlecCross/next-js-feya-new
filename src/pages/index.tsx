@@ -12,6 +12,7 @@ interface Category {
     srcSet: string;
     name_ua: string;
     image_path: string;
+    route: string;
     image_link_original: string;
     highestResolutionImage: string;
 }
@@ -31,7 +32,7 @@ const Index: React.FC<CategoriesProps> = ({ categories }) => {
             <ul className={gridStyle.container}>
                 {categories.map((category) => (
                     <li className={gridStyle.element} key={category.id}>
-                        <Link href={`${category.id}`}>
+                        <Link href={`${category.route}`}>
                             <div className={gridStyle.element__img_wrapper}>
                                 <img
                                     alt={category.name_ua}
@@ -61,7 +62,8 @@ export async function getStaticProps() {
         SELECT id, 
         name_ua, 
         image_path,
-        image_link_original
+        image_link_original,
+        route
         FROM category
         `;
         const categories: Category[] = result.rows.map((row: any) => {
@@ -71,6 +73,7 @@ export async function getStaticProps() {
                 name_ua: row.name_ua,
                 image_path: row.image_path,
                 image_link_original: row.image_link_original,
+                route: row.route,
                 srcSet: generateSrcSet(images),
                 highestResolutionImage: selectHighestResolutionImage(images)
             };
