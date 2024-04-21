@@ -59,12 +59,13 @@ export default Index;
 export async function getStaticProps() {
     try {
         const result = await sql`
-        SELECT id, 
-        name_ua, 
-        image_path,
-        image_link_original,
-        route
-        FROM category
+            SELECT id, 
+            name_ua, 
+            image_path,
+            image_link_original,
+            route
+            FROM category
+            WHERE parent_id IS NULL
         `;
         const categories: Category[] = result.rows.map((row: any) => {
             const images = scanImageFolder(`public${row.image_path}`);
