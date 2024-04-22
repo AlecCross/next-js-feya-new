@@ -12,8 +12,10 @@ interface Category {
 }
 
 interface Data {
+    parentCategoryId: string,
     title: string;
     description: string;
+    parentCategoryRoute: string;
     subcategories: Category[]; // Додано властивість для зберігання дочірніх категорій
 }
 
@@ -28,11 +30,11 @@ export async function getCategoryData(categoryId: string): Promise<Data> {
             FROM category 
             WHERE route = ${categoryId}
         `;
-        // console.log(categoryResult.rows[0].id)
+        console.log(categoryResult.rows[0].route)
         if (categoryResult.rows.length > 0) {
             const parentCategory = categoryResult.rows[0];
             const parentCategoryId = parentCategory.id;
-        
+
             // Отримання даних про дочірні категорії
             const subcategoryResult = await sql`
                 SELECT id,
@@ -53,14 +55,16 @@ export async function getCategoryData(categoryId: string): Promise<Data> {
                 image_path: row.image_path,
                 route: row.route
             }));
-        
+
             const data: Data = {
+                parentCategoryId: parentCategoryId,
                 title: parentCategory.name_ua,
                 description: parentCategory.name_ru,
+                parentCategoryRoute: parentCategory.route,
                 subcategories: subcategories
             };
 
-            console.log("getCategoryData: ",data, "subcategories ", subcategories)
+            // console.log("getCategoryData: ",data, "subcategories ", subcategories)
 
             return data;
         } else {
@@ -73,8 +77,10 @@ export async function getCategoryData(categoryId: string): Promise<Data> {
 
     // Повертаємо заглушку, якщо сталася помилка або категорія не знайдена
     return {
+        parentCategoryId: 'category error',
         title: "Category Title",
         description: "Category Description",
+        parentCategoryRoute: "Category Description",
         subcategories: []
     };
 }
