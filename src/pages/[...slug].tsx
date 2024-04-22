@@ -37,12 +37,23 @@ interface Product {
     product_category_id: string,
 }
 
+interface ProductData {
+    product_category_id: number,
+    id: number,
+    name_ua: string,
+    name_ru: string,
+    description_ua: string,
+    description_ru: string,
+    image_path: string,
+    image_link: string,
+    vendor_code: string,
+}
 
 interface GetServerSidePropsContext {
     params: { slug: string[] };
 }
 
-const DynamicPage = ({ data, products }: { data: Data, products: Product[] }) => {
+const DynamicPage = ({ data, products, product }: { data: Data, products: Product[], product: ProductData }) => {
     const router = useRouter();
     const slug = router.query.slug as string[];  // Використання type твердження для slug
     const [category, subcategory, productId] = slug;
@@ -92,7 +103,7 @@ const DynamicPage = ({ data, products }: { data: Data, products: Product[] }) =>
             )}
         </div>
     );
-    if (category && subcategory) return (
+    if (category && subcategory && !productId) return (
         <div>
             <h1>Dynamic Page</h1>
             {subcategory && <p>Subcategory: {subcategory}</p>}
@@ -124,6 +135,14 @@ const DynamicPage = ({ data, products }: { data: Data, products: Product[] }) =>
             </div>
         </div >
     );
+    if (category && subcategory && productId) return (<>
+        <h1>Dynamic Page</h1>
+        {productId && <p>Product ID: {productId}</p>}
+        <div>{product.description_ua}</div>
+        <div>{product.description_ru}</div>
+        <div>{product.name_ua}</div>
+        <div>{product.name_ru}</div>
+    </>);
 };
 
 // Функція SSR для отримання даних на основі параметрів шляху
@@ -132,10 +151,12 @@ export async function getServerSideProps({ params }: GetServerSidePropsContext) 
 
     let data = {};
     let products: Product[] = [];
+    let product: ProductData | null = null; // Можна початково встановити як null
 
     if (productId) {
         // Якщо є productId, отримуємо дані продукту
-        data = await getProductData(productId);
+        product = await getProductData(productId);
+        // data = await getCategoryData(category);
     } else if (subcategory) {
         // Якщо є subcategory, отримуємо дані продуктів
         data = await getCategoryData(category);
@@ -145,7 +166,8 @@ export async function getServerSideProps({ params }: GetServerSidePropsContext) 
         data = await getCategoryData(category);
     }
 
-    return { props: { data, products } };
+    // Передаємо лише products, якщо productId не присутній
+    return { props: { data, ...(productId ? {} : { products }), product } };
 }
 
 export default DynamicPage;
