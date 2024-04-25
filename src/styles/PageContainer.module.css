@@ -1,0 +1,29 @@
+.container {
+    margin: 0 auto;
+    padding-top: 0px;
+    width: 80%;
+}
+
+@media only screen and (min-width: 150px) {
+    .container {
+        width: 99%;
+    }
+}
+
+@media only screen and (min-width: 601px) {
+    .container {
+        width: 97%;
+    }
+}
+
+@media only screen and (min-width: 719px) {
+    .container {
+        width: 80%;
+    }
+}
+
+@media only screen and (min-width: 1400px) {
+    .container {
+        width: 60%;
+    }
+}
