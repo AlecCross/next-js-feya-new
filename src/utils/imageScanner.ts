@@ -1,7 +1,5 @@
-//src/utils/imageScanner.ts
-
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 interface Image {
     path: string;
@@ -10,14 +8,17 @@ interface Image {
 
 export function scanImageFolder(folderPath: string): Image[] {
     const images: Image[] = [];
-
+    const absoluteFolderPath = path.join(process.cwd(), folderPath);
+    
     // Скануємо вміст папки
-    const files = fs.readdirSync(folderPath);
+    // console.log("absoluteFolderPath ", absoluteFolderPath);
+    const files = fs.readdirSync(absoluteFolderPath);
+    // console.log("files ", files);
 
     // Проходимося по кожному файлу
     files.forEach((file: string) => {
         // Отримуємо повний шлях до файлу
-        const filePath = `${folderPath}/${file}`;
+        const filePath = path.join(absoluteFolderPath, file);
         // Отримуємо інформацію про файл
         const fileInfo = fs.statSync(filePath);
 
@@ -29,11 +30,12 @@ export function scanImageFolder(folderPath: string): Image[] {
 
             // Додаємо інформацію про зображення до масиву
             images.push({
-                path: filePath.replace(/^public\//, ''), // Видаляємо 'public/' тут
+                path: filePath,
                 resolution: resolution
             });
         }
     });
+    // console.log("files ", files);
 
     return images;
 }
