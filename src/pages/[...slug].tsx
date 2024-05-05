@@ -60,24 +60,9 @@ const DynamicPage = ({ data, products, product }: { data: Data, products: Produc
     
     if (category && !subcategory) return (
         <div>
-            <h1>Dynamic Page</h1>
-            <p>Category: {category}</p>
-            {subcategory && <p>Subcategory: {subcategory}</p>}
-            {productId && <p>Product ID: {productId}</p>}
             {data && (
                 <div>
                     <h2>{data.title}</h2>
-                    <p>{data.description}</p>
-                    {
-                        data.subcategories.map((sub, index) => <>
-                            <div>{sub.id}</div>
-                            <div>{sub.name_ru}</div>
-                            <div>{sub.name_ua}</div>
-                            <div>{sub.route}</div>
-                            <div>{sub.image_link_original}</div>
-                            <div>{sub.image_path}</div>
-                        </>)
-                    }
                     {<ul className={gridStyle.container}>
                         {data.subcategories.map((category) => (
                             <li className={gridStyle.element} key={category.id}>
@@ -105,12 +90,8 @@ const DynamicPage = ({ data, products, product }: { data: Data, products: Produc
     );
     if (category && subcategory && !productId) return (
         <div>
-            <h1>Dynamic Page</h1>
-            {subcategory && <p>Subcategory: {subcategory}</p>}
-            {productId && <p>Product ID: {productId}</p>}
             <div>
-                <h2>{data.title}</h2>
-                <p>{data.description}</p>
+                <h2 style={{textAlign: "center"}}>{subcategory.toUpperCase()}</h2>
                 <ul className={gridStyle.container}>
                     {products.map((product, index) => <div key={index}>
                         <li className={gridStyle.element} key={product.id}>
@@ -141,7 +122,7 @@ const DynamicPage = ({ data, products, product }: { data: Data, products: Produc
         <div>{product.description_ua}</div>
         <div>{product.description_ru}</div>
         <div>{product.name_ua}</div>
-        <div>{product.name_ru}</div>
+        <div>{product.name_ru}</div>        
     </>);
 };
 
