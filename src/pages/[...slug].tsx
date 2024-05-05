@@ -8,6 +8,8 @@ import { getProducts } from '../utils/getProducts'; // Функції для о�
 import gridStyle from "../styles/grid.module.css";
 import Link from 'next/link';
 
+import SubCategories from '../components/SubCategories';
+
 interface Data {
     parentCategoryId: string,
     title: string;
@@ -58,36 +60,7 @@ const DynamicPage = ({ data, products, product }: { data: Data, products: Produc
     const slug = router.query.slug as string[];  // Використання type твердження для slug
     const [category, subcategory, productId] = slug;
     
-    if (category && !subcategory) return (
-        <div>
-            {data && (
-                <div>
-                    <h2>{data.title}</h2>
-                    {<ul className={gridStyle.container}>
-                        {data.subcategories.map((category) => (
-                            <li className={gridStyle.element} key={category.id}>
-                                <Link href={`${data.parentCategoryRoute}/${category.route}`}>
-                                    <div className={gridStyle.element__img_wrapper}>
-                                        <img
-                                            alt={category.name_ua}
-                                            loading="lazy"
-                                            decoding="async"
-                                            className={gridStyle.element__img}
-                                            style={{ color: 'transparent', width: '100%', height: 'auto' }}
-                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                            srcSet={undefined ? undefined : undefined}
-                                            src={undefined || category.image_link_original || "/default-image.webp"}
-                                        />
-                                    </div>
-                                    <div className={gridStyle.element__name}>{category.name_ua}</div>
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>}
-                </div>
-            )}
-        </div>
-    );
+    if (category && !subcategory) return <SubCategories data={data} parentCategoryRoute={data.parentCategoryRoute}/>
     if (category && subcategory && !productId) return (
         <div>
             <div>
