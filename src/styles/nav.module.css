@@ -1,3 +1,5 @@
+/* src/styles/nav.module.css */
+
 .navbar {
     display: flex;
     justify-content: space-around;
@@ -10,6 +12,7 @@
     /* Firefox */
     -ms-user-select: none;
     /* Internet Explorer/Edge */
+    z-index: 3;
 }
 
 .logo {
@@ -171,12 +174,9 @@
     .navbar {
         justify-content: space-between;
         align-items: center;
-        position: fixed;
-        /* z-index: 3; */
+        /* position: fixed; */
         width: 100%;
-        /* top: 33px; */
         padding-bottom: 5px;
-        margin-bottom: 15px;
     }
 
     .menuPC {
@@ -207,8 +207,6 @@
 
     .burgerLineClose {
         position: relative;
-        /* width: 100%; */
-        /* top: 3px; */
         height: 2px;
         margin-bottom: 0px;
         background-color: #1a1919;
@@ -217,11 +215,9 @@
 
     .burgerLineClose:nth-child(2) {
         display: none;
-        /* Приховати центральну лінію крестика */
     }
 
     .burgerLineClose:last-child {
-        /* top: -2px; */
         height: 2px;
         margin-bottom: 9px;
         transform: rotate(45deg);
@@ -233,19 +229,19 @@
 
     .dropdown {
         position: fixed;
-        /* z-index: 3; */
-        /* top: 98px; */
         left: 0;
         right: 0;
         bottom: 0;
+        height: 100%;
         text-align: center;
         background-color: #f0f0f0;
+        z-index: 3;
     }
 }
 
 @media (max-width: 715px) {
     .navbar {
-        position: fixed;
+        /* position: fixed; */
         /* z-index: 3; */
         width: 100%;
         /* top: 0; */

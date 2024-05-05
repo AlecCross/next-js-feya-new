@@ -1,3 +1,5 @@
+//src/pages/_app.tsx
+
 import Layout from '@/components/Layout';
 import type { AppProps } from 'next/app'
 import styles from '../styles/page.module.css'

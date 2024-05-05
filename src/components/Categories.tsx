@@ -21,6 +21,7 @@ interface CategoriesProps {
 const Categories: React.FC<CategoriesProps> = ({ categories }) => {
     return (
         <div>
+            <h1>Групи товарів</h1>
             <ul className={gridStyle.container}>
                 {categories.map((category) => (
                     <li className={gridStyle.element} key={category.id}>

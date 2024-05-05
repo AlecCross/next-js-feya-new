@@ -1,3 +1,5 @@
+//src/components/Layout.tsx
+
 import React, { ReactNode } from 'react';
 import Navbar from './NavBar';
 import Footer from './Footer';

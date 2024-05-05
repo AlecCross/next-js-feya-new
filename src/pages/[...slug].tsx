@@ -57,7 +57,7 @@ const DynamicPage = ({ data, products, product }: { data: Data, products: Produc
     const router = useRouter();
     const slug = router.query.slug as string[];  // Використання type твердження для slug
     const [category, subcategory, productId] = slug;
-
+    
     if (category && !subcategory) return (
         <div>
             <h1>Dynamic Page</h1>
