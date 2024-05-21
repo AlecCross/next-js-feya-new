@@ -1,0 +1,53 @@
+.wrapper {
+    display: flex;
+    /* justify-content: space-between; */
+    padding-top: 15px;
+}
+
+.column{
+    flex: 1;  /* Забезпечує, що кожна колонка займає однакову частину простору в контейнері */
+    padding: 20px; /* Опційно: Додає відступи всередині кожної колонки */
+}
+
+.images {
+    
+}
+
+.image {
+    width: 100%;
+}
+
+
+
+.details{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-around; */
+    padding: 20px;
+}
+
+.vendor{
+    font-weight: bold;
+    font-size:100%;
+    margin-bottom: 10px;
+}
+
+.name{
+    font-weight: bold;
+    font-size:1vw;
+    margin-bottom: 40px;
+}
+
+.description{
+    
+}
+
+@media (max-width: 720px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .image {
+        width: 100%;
+    }
+}                             

@@ -9,6 +9,7 @@ import gridStyle from "../styles/grid.module.css";
 import Link from 'next/link';
 
 import SubCategories from '../components/SubCategories';
+import ProductComponent from '@/components/Product';
 
 interface Data {
     parentCategoryId: string,
@@ -90,12 +91,7 @@ const DynamicPage = ({ data, products, product }: { data: Data, products: Produc
         </div >
     );
     if (category && subcategory && productId) return (<>
-        <h1>Dynamic Page</h1>
-        {productId && <p>Product ID: {productId}</p>}
-        <div>{product.description_ua}</div>
-        <div>{product.description_ru}</div>
-        <div>{product.name_ua}</div>
-        <div>{product.name_ru}</div>        
+        <ProductComponent product={product}/>  
     </>);
 };
 
