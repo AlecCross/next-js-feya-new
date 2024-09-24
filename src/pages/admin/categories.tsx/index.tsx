@@ -50,12 +50,12 @@ export default function AdminCategories() {
         <tbody>
           {categories.map((category) => (
             <tr key={category.id}>
-              <td>{`${category.id-1}`}</td>
+              <td>{`${parseInt(category.id, 10) - 1}`}</td>
               <td>
                 {category.image_path && (
                   <img src={`../${category.image_path}/image-256p.webp`} alt={category.name_ua} width={50} />
-                //<p>{category.image_path}</p>
-               )}
+                  //<p>{category.image_path}</p>
+                )}
               </td>
               <td>{category.name_ua}</td>
               {/* інші дані */}

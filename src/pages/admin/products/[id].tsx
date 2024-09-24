@@ -7,7 +7,7 @@ export default function EditProduct() {
     name_ua: '',
     name_ru: '',
     description_ua: '',
-    description_ru: '',
+    description_ru: '',                  
     image_link: '',
     product_category_id: '',
   });
@@ -15,41 +15,42 @@ export default function EditProduct() {
   const router = useRouter();
   const { id } = router.query;
 
+  // Функція виноситься на рівень вище в компоненті
+  async function fetchProduct(productId: any) {
+    try {
+      const res = await fetch(`/api/products/${productId}`);
+      const product = await res.json();
+      setFormData({
+        vendor_code: product.vendor_code,
+        name_ua: product.name_ua,
+        name_ru: product.name_ru,
+        description_ua: product.description_ua,
+        description_ru: product.description_ru,
+        image_link: product.image_link,
+        product_category_id: product.product_category_id.toString(),
+      });
+      setLoading(false);
+    } catch (error) {
+      console.error('Failed to fetch product', error);
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     if (id) {
-      async function fetchProduct() {
-        try {
-          const res = await fetch(`/api/products/${id}`);
-          const product = await res.json();
-          setFormData({
-            vendor_code: product.vendor_code,
-            name_ua: product.name_ua,
-            name_ru: product.name_ru,
-            description_ua: product.description_ua,
-            description_ru: product.description_ru,
-            image_link: product.image_link,
-            product_category_id: product.product_category_id.toString(),
-          });
-          setLoading(false);
-        } catch (error) {
-          console.error('Failed to fetch product', error);
-          setLoading(false);
-        }
-      }
-      fetchProduct();
+      fetchProduct(id); // Виклик функції
     }
   }, [id]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e :any) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
-
     const productCategoryId = formData.product_category_id ? parseInt(formData.product_category_id, 10) : null;
 
     try {
@@ -74,6 +75,7 @@ export default function EditProduct() {
   };
 
   if (loading) return <p>Loading...</p>;
+
 
   return (
     <form onSubmit={handleSubmit}>
