@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model admins {
+  id       Int     @id @default(autoincrement())
+  login    String? @db.VarChar(255)
+  password String? @db.VarChar(60)
+}
+
+model category {
+  id                  Int               @id @default(autoincrement())
+  name_ua             String            @db.VarChar(255)
+  parent_id           Int?
+  name_ru             String?
+  image_link_original String?
+  image_path          String?
+  route               String?
+  product             product[]
+  productcategory     productcategory[]
+}
+
+model color {
+  id                  Int                   @id @default(autoincrement())
+  name                String                @db.VarChar(255)
+  productvariantcolor productvariantcolor[]
+}
+
+model pets2 {
+  id    Int     @id @default(autoincrement())
+  name  String? @db.VarChar(255)
+  owner String? @db.VarChar(255)
+}
+
+model product {
+  id                  Int               @id @default(autoincrement())
+  vendor_code         String            @db.VarChar(255)
+  name_ua             String?
+  name_ru             String?
+  description_ua      String?
+  description_ru      String?
+  image_path          String?
+  image_link          String?
+  product_category_id Int?
+  category            category?         @relation(fields: [product_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  productcategory     productcategory[]
+  productimage        productimage[]
+  productremains      productremains[]
+  productvariant      productvariant[]
+}
+
+model productcategory {
+  id          Int      @id @default(autoincrement())
+  product_id  Int
+  category_id Int
+  category    category @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  product     product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model productimage {
+  id         Int     @id @default(autoincrement())
+  product_id Int
+  image_link String
+  product    product @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model productremains {
+  id                Int            @id @default(autoincrement())
+  product_id        Int
+  productvariant_id Int
+  remains           Int
+  price             Decimal        @db.Decimal(10, 2)
+  product           product        @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  productvariant    productvariant @relation(fields: [productvariant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model productvariant {
+  id                  Int                   @id @default(autoincrement())
+  product_id          Int
+  name                String                @db.VarChar(255)
+  name_ru             String?               @db.VarChar(255)
+  name_uk             String?               @db.VarChar(255)
+  style               String?               @db.VarChar(255)
+  productremains      productremains[]
+  product             product               @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  productvariantcolor productvariantcolor[]
+}
+
+model productvariantcolor {
+  id                 Int            @id @default(autoincrement())
+  product_variant_id Int
+  color_id           Int
+  color              color          @relation(fields: [color_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  productvariant     productvariant @relation(fields: [product_variant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
