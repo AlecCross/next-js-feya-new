@@ -9,13 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@vercel/postgres": "^0.8.0",
+    "@prisma/client": "^5.18.0",
     "@types/node": "20.12.7",
     "@types/react": "18.2.77",
     "@types/react-dom": "18.2.25",
+    "@vercel/postgres": "^0.8.0",
     "next": "14.2.0",
+    "next-auth": "^4.24.7",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-select": "^5.8.0",
     "typescript": "5.4.5"
+  },
+  "devDependencies": {
+    "prisma": "^5.18.0"
   }
 }

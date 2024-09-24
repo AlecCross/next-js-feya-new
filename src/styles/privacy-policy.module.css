@@ -1,0 +1,22 @@
+.container {
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+.paragraph{
+    padding: 20px;
+}
+
+.header {
+    margin-bottom: 18px;
+    font-size: 24px;
+    color: #212529;
+}
+
+.text {
+    margin-bottom: 1s6px;
+    font-size: 16px;
+    line-height: 1.5;
+}
