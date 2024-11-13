@@ -9,7 +9,7 @@ export default function AddProductForm() {
     description_ua: '',
     description_ru: '',
     image_link: '',
-    product_category_id: null,
+    product_category_id: null as number | null,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
